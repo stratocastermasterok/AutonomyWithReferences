@@ -7,9 +7,10 @@ d=(index-1)*0;
 l=thisLayer;
 var myShapeArray = { startPosition: transform.position,
     theDirections: [
-[0,[255,45]],
+[0,[255,90+45]],
 [3,[thisComp.layer("myGuide")]],
-[0,[298,90]]
+[0,[600,10]],
+[0,[600,10]],	
 ]};function tomiEase(rate, startTime, endTime, startVal, endVal) {
     original = linear(time, startTime, endTime, 0, 2);
     myScale = rate.valueAtTime(original);
@@ -34,11 +35,11 @@ function myCircle(startPosition, radius, freq, phase, howMuchOfCycle, start, end
     return [x, y] + startPosition + [-radius * Math.cos(phase), -radius * Math.sin(phase)];
     //How to make it always connect....the custom offset is generated based on the phase 
 }
-function refer(startPosition,refLayer,startt)
+function refer(startPosition,refLayer,liquidTime,clutchTime)
 {
     startVal = startPosition;
-    extraaX= refLayer.position.valueAtTime(time)[0]-refLayer.position.valueAtTime(startt)[0];
-    extraaY= refLayer.position.valueAtTime(time)[1]-refLayer.position.valueAtTime(startt)[1];
+    extraaX= refLayer.position.valueAtTime(liquidTime)[0]-refLayer.position.valueAtTime(clutchTime)[0];
+    extraaY= refLayer.position.valueAtTime(liquidTime)[1]-refLayer.position.valueAtTime(clutchTime)[1];
     endVal = startVal + [extraaX,extraaY];
     return endVal;
 }
@@ -98,9 +99,14 @@ else {
             x = tomiEase(thisComp.layer("TheEase").effect(myOpts[motionType % myOpts.length])("Slider"), start, start + holdTime, startVal, endVal);
         } 
 else if (whichType == 3) {
-            endVal = refer(startVal,myRefLayer,l.marker.key(j + markerStart).time);
             end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
-            x = tomiEase(thisComp.layer("TheEase").effect(myOpts[motionType % myOpts.length])("Slider"), start, start + holdTime, startVal, endVal);
+				
+				endVal=[100,100];
+
+				if (time >=start && time < end)
+				{
+	            x=refer(startVal,myRefLayer,time,l.marker.key(j + markerStart).time);
+				}
         } 
 
 else {
@@ -119,8 +125,22 @@ else {
             x = tomiEase(thisComp.layer("TheEase").effect(myOpts[motionType % myOpts.length])("Slider"), start, end, startVal, endVal);
         }
 else if (whichType == 3) {
+			//endVal = refer(startVal,myRefLayer,l.marker.key(j +1+ markerStart).time,l.marker.key(j + markerStart).time);
+
             end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
-	            x = refer(startVal,myRefLayer,l.marker.key(j + markerStart).time);
+				
+
+				if (time >=start && time < end)
+				{
+			x=refer(startVal,myRefLayer,time,l.marker.key(j + markerStart).time);
+				}
+			else
+				{
+					x=refer(startVal,myRefLayer,l.marker.key(j +1+ markerStart).time,l.marker.key(j + markerStart).time);
+					}
+
+
+
 
         }
  else {
