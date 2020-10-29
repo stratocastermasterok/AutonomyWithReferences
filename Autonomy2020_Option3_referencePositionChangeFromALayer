@@ -9,8 +9,14 @@ var myShapeArray = { startPosition: transform.position,
     theDirections: [
 [0,[255,90+45]],
 [3,[thisComp.layer("myGuide")]],
-[0,[600,10]],
-[0,[600,10]],	
+[0,[400,10]],
+[3,[thisComp.layer("myGuide")]],
+[3,[thisComp.layer("myGuide")]],
+[0,[400,10]],
+[3,[thisComp.layer("myGuide")]],
+[0,[300,270]],
+[3,[thisComp.layer("myGuide2")]],
+
 ]};function tomiEase(rate, startTime, endTime, startVal, endVal) {
     original = linear(time, startTime, endTime, 0, 2);
     myScale = rate.valueAtTime(original);
@@ -99,14 +105,18 @@ else {
             x = tomiEase(thisComp.layer("TheEase").effect(myOpts[motionType % myOpts.length])("Slider"), start, start + holdTime, startVal, endVal);
         } 
 else if (whichType == 3) {
-            end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
+              end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
 				
-				endVal=[100,100];
 
 				if (time >=start && time < end)
 				{
-	            x=refer(startVal,myRefLayer,time,l.marker.key(j + markerStart).time);
+			x=refer(startVal,myRefLayer,time,l.marker.key(j + markerStart).time);
 				}
+			else
+				{
+					x=refer(startVal,myRefLayer,l.marker.key(j +1+ markerStart).time,l.marker.key(j + markerStart).time);
+					}
+			
         } 
 
 else {
