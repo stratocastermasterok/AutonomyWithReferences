@@ -134,6 +134,8 @@ else {
             end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
             x = tomiEase(thisComp.layer("TheEase").effect(myOpts[motionType % myOpts.length])("Slider"), start, start + holdTime, startVal, endVal);
         } 
+	
+	
 else if (whichType == 3) {
               end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
 				
@@ -152,7 +154,7 @@ else if (whichType == 3) {
 	else if (whichType == 4) {
 	
 			end += l.marker.key(j + 1 + markerStart).time - l.marker.key(j + markerStart).time;
-			x= myCurve(startVal,dist,ang,tangent,incoming,outgoing,start,end,motionType);
+			x= myCurve(startVal,dist,ang,tangent,incoming,outgoing,start,start + holdTime,motionType);
 
 
         }
